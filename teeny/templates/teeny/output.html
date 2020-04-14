@@ -1,0 +1,36 @@
+
+
+{% extends "teeny/base.html" %}
+
+{% block body_block %}
+
+	<h1>Make Your Long URL Look Teeny Weeny</h1>
+
+	{% if shortened_url %}
+		<div class="output-class">
+			<p>The shortened URL is <b>{{ shortened_url }}</b> <br>
+			<a class="shorturl" href="{{ shortened_url }}">
+				<small>[copy to clipboard]</small></a>
+			</p>
+		</div>
+	{% endif %}
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(".shorturl").click(function(e){
+			e.preventDefault();
+			var copyText = $(this).attr('href');
+
+			document.addEventListener('copy', function(e) {
+				e.clipboardData.setData('text/plain', copyText);
+				e.preventDefault();
+			}, true);
+
+			document.execCommand('copy');
+			console.log('copied text : ', copyText);
+		})
+	</script>
+
+{% endblock %}
+
+

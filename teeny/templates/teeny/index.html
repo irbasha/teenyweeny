@@ -1,0 +1,48 @@
+{% extends "teeny/base.html" %}
+
+{% block body_block %}
+
+	<h1>Make Your Long URL Look Teeny Weeny</h1>
+
+	<div class="form-class">
+		<p><b>Enter a long url</b></p>
+		<form class='create-form' action='/createurl/' method='get'>
+			<p> <input type="text" name="url" value=""> </p>
+			<p> <input type="submit" value="Shorten URL"> </p>
+		</form>
+	</div>
+
+	{% if shortened_url %}
+
+	<div class="output-class">
+		<p>The shortened URL is <b>{{ shortened_url }}</b> <br>
+		<a class="copyurl" href="{{ shortened_url }}"><small>[copy to clipboard]</small></a>
+		<a class="openurl" href="{{ shortened_url }}"> <small>[Open in New Tab]</small></a>
+		</p>
+	</div>
+
+	{% endif %}
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(".copyurl").click(function(e){
+			e.preventDefault();
+			var copyText = $(this).attr('href');
+
+			document.addEventListener('copy', function(e) {
+				e.clipboardData.setData('text/plain', copyText);
+				e.preventDefault();
+			}, true);
+
+			document.execCommand('copy');
+			console.log('copied text : ', copyText);
+		})
+		$(".openurl").click(function(e){
+			e.preventDefault();
+			var urltoopen = $(this).attr('href');
+			window.open(urltoopen)
+		})
+
+	</script>
+
+{% endblock %}
